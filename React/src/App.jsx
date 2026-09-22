@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { api } from './api'
 import './App.css'
-
+import logo from './assets/logo.png'
 
 
 function App() {
@@ -93,8 +93,10 @@ function App() {
 
   return (
     <main className="app-shell">
-      <header className="topbar"><div><p className="eyebrow">TASK MANAGER</p><h1>Bom trabalho, {user.name}.</h1></div><button className="text-button" onClick={() => { localStorage.removeItem('task-manager-user'); setUser(null) }}>Sair</button></header>
+      {<img src={logo} alt="Task Manager Logo" className="app-logo" style={{ height: '240px', marginBottom: '2px' }} />}
+      <header className="topbar"><div><h4>Bom trabalho, {user.name} !</h4></div><button className="text-button" onClick={() => { localStorage.removeItem('task-manager-user'); setUser(null) }}>Sair</button></header>
       {error && <p className="error banner">{error}</p>}
+        
       <section className="workspace">
         <div className="new-task panel"><p className="eyebrow">NOVA TAREFA</p><h2>O que precisa de acontecer?</h2><form onSubmit={createTask}><input required placeholder="Título da tarefa" value={taskForm.title} onChange={(event) => setTaskForm({ ...taskForm, title: event.target.value })} /><textarea placeholder="Detalhes (opcional)" value={taskForm.description} onChange={(event) => setTaskForm({ ...taskForm, description: event.target.value })} /><input type="date" value={taskForm.due_date} onChange={(event) => setTaskForm({ ...taskForm, due_date: event.target.value })} /><button className="primary-button">Adicionar tarefa</button></form></div>
         <div className="task-area"><div className="task-heading"><div><p className="eyebrow">A TUA LISTA</p><h2>{tasks.length} tarefas</h2></div><select value={filter} onChange={(event) => setFilter(event.target.value)}><option value="all">Todas</option><option value="pending">Pendentes</option><option value="done">Concluídas</option></select></div><div className="task-list">{visibleTasks.map((task) => <article className={`task ${task.status === 'done' ? 'completed' : ''}`} key={task.id}><button className="check" aria-label="Marcar tarefa" onClick={() => toggleTask(task)}>{task.status === 'done' ? '✓' : ''}</button><div className="task-copy"><h3>{task.title}</h3>{task.description && <p>{task.description}</p>}{task.due_date && <small>Prazo: {task.due_date}</small>}</div><button className="delete-button" aria-label="Eliminar tarefa" onClick={() => removeTask(task.id)}>Eliminar</button></article>)}{visibleTasks.length === 0 && <div className="empty">Ainda não há tarefas neste filtro.</div>}</div></div>
