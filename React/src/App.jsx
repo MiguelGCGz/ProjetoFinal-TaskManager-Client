@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 import { api } from './api'
 import './App.css'
 
+
+
 function App() {
   const [user, setUser] = useState(() => JSON.parse(localStorage.getItem('task-manager-user') || 'null'))
   const [authMode, setAuthMode] = useState('login')
@@ -11,6 +13,7 @@ function App() {
   const [filter, setFilter] = useState('all')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+
 
   useEffect(() => {
     if (!user) return
@@ -68,8 +71,8 @@ function App() {
     return (
       <main className="auth-shell">
         <section className="auth-panel">
-          <p className="eyebrow">TASK MANAGER / API ONLINE</p>
-          <h1>Organiza o trabalho que importa.</h1>
+          <img src={"./src/assets/logo.png"} alt="Logo" className="auth-logo" style={{ height: '260px', marginBottom: '10px' }} />
+          <h4>Organiza o trabalho que importa.</h4>
           <p className="lead">Uma área simples para transformar intenções em tarefas concluídas.</p>
           <form onSubmit={handleAuth} className="auth-form">
             {authMode === 'register' && <input required placeholder="Nome" value={authForm.name} onChange={(event) => setAuthForm({ ...authForm, name: event.target.value })} />}

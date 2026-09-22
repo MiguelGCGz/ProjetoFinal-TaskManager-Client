@@ -2,7 +2,7 @@
 .auth-shell { display: grid; place-items: center; background: linear-gradient(135deg, #f3f6ff, #fff8ed); }
 .auth-panel { width: min(100%, 440px); padding: 44px; background: #fff; border: 1px solid #dce3ef; box-shadow: 12px 18px 0 #d9e4f5; }
 .eyebrow { color: #54709a; font-size: 12px; font-weight: 800; letter-spacing: 1.8px; margin: 0 0 12px; }
-h1, h2, h3 { color: #4874c0; margin-top: 0; }
+h1, h2, h3, h4 { color: #4874c0; margin-top: 0; }
 h1 { font-size: clamp(2rem, 5vw, 4rem); line-height: 1; }
 .auth-panel h1 { font-size: 3rem; }
 .lead { color: #64748b; margin-bottom: 28px; }
