@@ -205,6 +205,11 @@ textarea {
     color: #b42318;
 }
 
+.success {
+    margin-top: 16px;
+    color: #15803d;
+}
+
 
 /* =========================
    TOPO

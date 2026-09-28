@@ -12,6 +12,7 @@ function App() {
   const [taskForm, setTaskForm] = useState({ title: '', description: '', due_date: '', status: 'pending' })
   const [filter, setFilter] = useState('all')
   const [error, setError] = useState('')
+  const [notice, setNotice] = useState('')
   const [loading, setLoading] = useState(false)
 
 
@@ -24,8 +25,17 @@ function App() {
     event.preventDefault()
     setLoading(true)
     setError('')
+    setNotice('')
     try {
-      const result = await (authMode === 'login' ? api.login(authForm) : api.register(authForm))
+      if (authMode === 'register') {
+        await api.register(authForm)
+        setAuthMode('login')
+        setAuthForm({ name: '', email: authForm.email, password: '' })
+        setNotice('Registo efetuado com sucesso')
+        return
+      }
+
+      const result = await api.login(authForm)
       setUser(result)
       localStorage.setItem('task-manager-user', JSON.stringify(result))
       setAuthForm({ name: '', email: '', password: '' })
@@ -80,9 +90,10 @@ function App() {
             <input required minLength="4" type="password" placeholder="Palavra-passe" value={authForm.password} onChange={(event) => setAuthForm({ ...authForm, password: event.target.value })} />
             <button className="primary-button" disabled={loading}>{loading ? 'A ligar...' : authMode === 'login' ? 'Entrar' : 'Criar conta'}</button>
           </form>
-          <button className="text-button" onClick={() => { setAuthMode(authMode === 'login' ? 'register' : 'login'); setError('') }}>
+          <button className="text-button" onClick={() => { setAuthMode(authMode === 'login' ? 'register' : 'login'); setError(''); setNotice('') }}>
             {authMode === 'login' ? 'Ainda não tens conta? Regista-te' : 'Já tens conta? Entra'}
           </button>
+          {notice && <p className="success">{notice}</p>}
           {error && <p className="error">{error}</p>}
         </section>
       </main>
