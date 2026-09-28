@@ -1,28 +1,364 @@
-.auth-shell, .app-shell { min-height: 100vh; padding: 48px clamp(20px, 6vw, 96px); box-sizing: border-box; }
-.auth-shell { display: grid; place-items: center; background: linear-gradient(135deg, #f3f6ff, #fff8ed); }
-.auth-panel { width: min(100%, 440px); padding: 44px; background: #fff; border: 1px solid #dce3ef; box-shadow: 12px 18px 0 #d9e4f5; }
-.eyebrow { color: #54709a; font-size: 12px; font-weight: 800; letter-spacing: 1.8px; margin: 0 0 12px; }
-h1, h2, h3, h4 { color: #4874c0; margin-top: 0; }
-h1 { font-size: clamp(2rem, 5vw, 4rem); line-height: 1; }
-.auth-panel h1 { font-size: 3rem; }
-.lead { color: #64748b; margin-bottom: 28px; }
-.auth-form, .new-task form { display: grid; gap: 12px; }
-input, textarea, select { width: 100%; box-sizing: border-box; border: 1px solid #c8d3e2; background: #fbfdff; color: #17243b; padding: 13px 14px; font: inherit; }
-textarea { min-height: 96px; resize: vertical; }
-button { border: 0; cursor: pointer; font: inherit; }
-.primary-button { background: #e65d3d; color: white; padding: 13px 18px; font-weight: 800; }
-.primary-button:disabled { opacity: .65; cursor: wait; }
-.text-button { color: #54709a; background: transparent; padding: 10px 0; font-weight: 700; }
-.error { color: #b42318; margin-top: 16px; }
-.topbar { max-width: 1180px; margin: auto; display: flex; align-items: end; justify-content: space-between; border-bottom: 1px solid #dce3ef; padding-bottom: 28px; }
-.topbar h1 { margin-bottom: 0; font-size: clamp(2rem, 5vw, 3.6rem); }
-.workspace { max-width: 1180px; margin: 42px auto; display: grid; grid-template-columns: minmax(240px, 320px) 1fr; gap: 48px; }
-.panel { background: #fff; border: 1px solid #dce3ef; padding: 24px; }
-.task-heading { display: flex; justify-content: space-between; align-items: start; margin-bottom: 20px; }
-.task-heading h2 { margin-bottom: 0; }
-.task { display: flex; align-items: start; gap: 14px; padding: 20px 0; border-bottom: 1px solid #dce3ef; }
-.check { width: 28px; height: 28px; flex: 0 0 28px; border: 1px solid #e65d3d; background: transparent; color: #e65d3d; font-weight: 900; }
-.task-copy { flex: 1; }.task-copy h3 { margin: 2px 0 5px; }.task-copy p { color: #64748b; margin: 0 0 6px; }.task-copy small { color: #54709a; }
-.completed h3 { text-decoration: line-through; color: #8090a5; }.delete-button { color: #b42318; background: transparent; font-size: 13px; padding: 4px; }.empty { color: #64748b; padding: 35px 0; }
-.banner { max-width: 1180px; margin: 18px auto -20px; }
-@media (max-width: 760px) { .auth-panel { padding: 28px; }.workspace { grid-template-columns: 1fr; gap: 32px; }.app-shell, .auth-shell { padding: 28px 18px; }.task-heading { align-items: center; } }
+/* =========================
+   RESET / NORMALIZAÇÃO
+   ========================= */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #17243b;
+    background: #ffffff;
+    line-height: 1.5;
+}
+
+/* Evita diferenças de fontes entre browsers */
+button,
+input,
+textarea,
+select {
+    font: inherit;
+}
+
+/* Normalização dos controlos */
+button {
+    border: 0;
+    margin: 0;
+    cursor: pointer;
+
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+input,
+textarea,
+select {
+    margin: 0;
+    border-radius: 0;
+}
+
+input,
+textarea {
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+
+/* =========================
+   ESTRUTURA PRINCIPAL
+   ========================= */
+
+.auth-shell,
+.app-shell {
+    min-height: 100vh;
+    min-height: 100dvh;
+
+    padding: 48px clamp(20px, 6vw, 96px);
+}
+
+.auth-shell {
+    display: grid;
+    place-items: center;
+
+    background: linear-gradient(
+        135deg,
+        #f3f6ff,
+        #fff8ed
+    );
+}
+
+
+/* =========================
+   LOGIN
+   ========================= */
+
+.auth-panel {
+    width: min(100%, 440px);
+    padding: 44px;
+
+    background: #ffffff;
+    border: 1px solid #dce3ef;
+
+    box-shadow: 12px 18px 0 #d9e4f5;
+}
+
+.eyebrow {
+    margin: 0 0 12px;
+
+    color: #54709a;
+
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 1.8px;
+}
+
+
+/* =========================
+   TÍTULOS
+   ========================= */
+
+h1,
+h2,
+h3,
+h4 {
+    margin-top: 0;
+    color: #4874c0;
+}
+
+h1 {
+    font-size: clamp(2rem, 5vw, 4rem);
+    line-height: 1;
+}
+
+.auth-panel h1 {
+    font-size: 3rem;
+}
+
+.lead {
+    margin-bottom: 28px;
+    color: #64748b;
+}
+
+
+/* =========================
+   FORMULÁRIOS
+   ========================= */
+
+.auth-form,
+.new-task form {
+    display: grid;
+    gap: 12px;
+}
+
+input,
+textarea,
+select {
+    display: block;
+
+    width: 100%;
+    padding: 13px 14px;
+
+    border: 1px solid #c8d3e2;
+    background: #fbfdff;
+    color: #17243b;
+}
+
+textarea {
+    min-height: 96px;
+    resize: vertical;
+}
+
+
+/* =========================
+   BOTÕES
+   ========================= */
+
+.primary-button {
+    padding: 13px 18px;
+
+    background: #e65d3d;
+    color: #ffffff;
+
+    font-weight: 800;
+}
+
+.primary-button:disabled {
+    opacity: 0.65;
+    cursor: wait;
+}
+
+.text-button {
+    padding: 10px 0;
+
+    background: transparent;
+    color: #54709a;
+
+    font-weight: 700;
+}
+
+.delete-button {
+    padding: 4px;
+
+    background: transparent;
+    color: #b42318;
+
+    font-size: 13px;
+}
+
+
+/* =========================
+   MENSAGENS
+   ========================= */
+
+.error {
+    margin-top: 16px;
+    color: #b42318;
+}
+
+
+/* =========================
+   TOPO
+   ========================= */
+
+.topbar {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    max-width: 1180px;
+    margin: 0 auto;
+    padding-bottom: 28px;
+
+    border-bottom: 1px solid #dce3ef;
+}
+
+.topbar h1 {
+    margin-bottom: 0;
+
+    font-size: clamp(2rem, 5vw, 3.6rem);
+}
+
+
+/* =========================
+   ÁREA DE TRABALHO
+   ========================= */
+
+.workspace {
+    display: grid;
+
+    grid-template-columns: minmax(240px, 320px) minmax(0, 1fr);
+
+    gap: 48px;
+
+    max-width: 1180px;
+    margin: 42px auto;
+}
+
+.panel {
+    min-width: 0;
+
+    padding: 24px;
+
+    background: #ffffff;
+    border: 1px solid #dce3ef;
+}
+
+
+/* =========================
+   TAREFAS
+   ========================= */
+
+.task-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    margin-bottom: 20px;
+}
+
+.task-heading h2 {
+    margin-bottom: 0;
+}
+
+.task {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 14px;
+
+    padding: 20px 0;
+
+    border-bottom: 1px solid #dce3ef;
+}
+
+.check {
+    width: 28px;
+    height: 28px;
+
+    flex: 0 0 28px;
+
+    padding: 0;
+
+    border: 1px solid #e65d3d;
+    background: transparent;
+    color: #e65d3d;
+
+    font-weight: 900;
+}
+
+.task-copy {
+    flex: 1;
+    min-width: 0;
+}
+
+.task-copy h3 {
+    margin: 2px 0 5px;
+}
+
+.task-copy p {
+    margin: 0 0 6px;
+
+    color: #64748b;
+
+    overflow-wrap: break-word;
+}
+
+.task-copy small {
+    color: #54709a;
+}
+
+.completed h3 {
+    color: #8090a5;
+    text-decoration: line-through;
+}
+
+.empty {
+    padding: 35px 0;
+    color: #64748b;
+}
+
+
+/* =========================
+   BANNER
+   ========================= */
+
+.banner {
+    max-width: 1180px;
+    margin: 18px auto -20px;
+}
+
+
+/* =========================
+   RESPONSIVO
+   ========================= */
+
+@media (max-width: 760px) {
+
+    .auth-panel {
+        padding: 28px;
+    }
+
+    .workspace {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+
+    .app-shell,
+    .auth-shell {
+        padding: 28px 18px;
+    }
+
+    .task-heading {
+        align-items: center;
+    }
+}
