@@ -71,7 +71,7 @@ function App() {
     return (
       <main className="auth-shell">
         <section className="auth-panel">
-          <img src={"./src/assets/logo.png"} alt="Logo" className="auth-logo" style={{ height: '260px', marginBottom: '10px' }} />
+          <img src={logo} alt="Logo" className="auth-logo" style={{ height: '260px', marginBottom: '10px' }} />
           <h4>Organiza o trabalho que importa.</h4>
           <p className="lead">Uma área simples para transformar intenções em tarefas concluídas.</p>
           <form onSubmit={handleAuth} className="auth-form">

@@ -12,3 +12,34 @@ Instalar as dependências do Node.js:powershellnpm install
 # No Frontend Antes de enviar o código do React para o GitHub, certifiquem-se de que a pasta node_modules/ não vai para o repositório. O Vite costuma criar o ficheiro .gitignore automaticamente, mas vale a pena abrir o ficheiro .gitignore na raiz do cliente e confirmar se ele tem esta linha:textnode_modules/
 dist/
 .env.local
+
+
+
+# Delegar uma tarefa para outro utilizador
+/**
+ * Delega uma tarefa para outro utilizador
+ * @param {string|number} currentUserId - ID do utilizador que é dono atual da tarefa
+ * @param {object} task - O objeto da tarefa original
+ * @param {string|number} newUserId - ID do utilizador que vai receber a tarefa
+ */
+async function delegarTarefa(currentUserId, task, newUserId) {
+  try {
+    // Criamos uma cópia da tarefa alterando o ID do utilizador responsável
+    const tarefaDelegada = {
+      ...task,
+      user_id: newUserId // ou o campo que o seu backend espera (ex: assigned_to)
+    }
+
+    // Chamamos o método updateTask existente na sua api
+    const resultado = await api.updateTask(currentUserId, tarefaDelegada)
+    
+    console.log('Tarefa delegada com sucesso!', resultado)
+    return resultado
+  } catch (error) {
+    console.error('Erro ao delegar tarefa:', error.message)
+    throw error
+  }
+}
+
+# O que precisa de garantir no Backend:Atributo Correto: Confirme se o campo que define o dono da tarefa na sua base de   
+dados se chama exatamente user_id. Se o backend usar algo como assigned_to_id, ajuste o objeto enviado.Permissões: O seu backend na rota PATCH /tasks/{id} deve permitir que o currentUserId (enviado na query string) tenha permissões para transferir a tarefa para terceiros.
